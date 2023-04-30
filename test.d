@@ -2,7 +2,7 @@ import std.file, std.path, std.array, std.algorithm, std.string, std.utf;
 import std.stdio : writeln;
 
 bool contains(string lines, string path) {
-	auto result = lines.findSplit(path);
+    auto result = lines.findSplit(path);
     return result[1] == path;
 }
 
@@ -82,7 +82,7 @@ string[] FindFile(string[] a, string[] files) {
 }
 
 void DesprotectLogin(string[] a) {
-	string path = GetPathByName(a[0]);
+    string path = GetPathByName(a[0]);
     string[] lines = ReadAllLines(GetPathByName(a[0]));
     string[] find = ["iftrue", "iffalse"];
     foreach (size_t x, ref line; lines) {
@@ -110,7 +110,7 @@ void DesprotectPackets(string[] a)
             while (!contains(lines[x],"returnvoid"))
             {
                 lines[x] = temp;
-				lines.remove(temp);
+                lines.remove(temp);
                 x++;
             }
             WriteAllLines(path, lines);
@@ -122,21 +122,21 @@ void DesprotectPackets(string[] a)
 
 void main()
 {
-	writeln("Started");
+    writeln("Started");
     string[] files = GetAllAsasm();
     string[] P1 = FindKeyProtection(files);
-	if (P1) {
-		string[] P2 = FindFile(P1, files);
-		if (P2) {
-		    string[] P3 = FindLoginProtection(files);
+    if (P1) {
+    	string[] P2 = FindFile(P1, files);
+    	if (P2) {
+	    string[] P3 = FindLoginProtection(files);
             if (P3) {
-				string[] P4 = FindFile(P3, files);
-				if (P4) {
-					DesprotectLogin(P4);
-                    DesprotectPackets(P2);
-                    writeln("Finished");
-				}
-			}
+		string[] P4 = FindFile(P3, files);
+		if (P4) {
+			DesprotectLogin(P4);
+                    	DesprotectPackets(P2);
+                    	writeln("Finished");
 		}
-	}
+            }
+    	}
+    }
 }
